@@ -35,8 +35,50 @@ CipherSQLStudio is a simple SQL practice and execution web application that allo
 
 ## Project Structure
 
+```
 CipherSQLStudio/
 │
 ├── index.html
 ├── app.py
 └── README.md
+```
+
+---
+
+## How It Works
+
+1. The user enters an SQL query in the text area  
+2. The query is sent to the Flask backend using a POST request  
+3. The backend executes the query on the MySQL database  
+4. Results are returned in JSON format  
+5. The frontend displays the output in a table  
+
+---
+
+## Setup Instructions
+
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/your-username/CipherSQLStudio.git
+cd CipherSQLStudio
+
+pip install flask flask-cors pymysql
+
+CREATE DATABASE cipher_sql_studio;
+
+host="localhost"
+user="root"
+password="your_password"
+database="cipher_sql_studio"
+
+python app.py
+http://127.0.0.1:5000
+
+```
+## Future Enhancements
+
+User authentication
+SQL query validation
+Multiple database support
+Predefined SQL challenges
+Syntax highlighting editor
