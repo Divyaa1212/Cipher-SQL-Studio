@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CipherSQLStudio</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        textarea {
+            width: 100%;
+            height: 140px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            resize: none;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-group {
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .execute-btn {
+            background-color: #667eea;
+            color: #fff;
+        }
+
+        .execute-btn:hover {
+            background-color: #5a67d8;
+        }
+
+        .hint-btn {
+            background-color: #e2e8f0;
+            color: #333;
+        }
+
+        .hint-btn:hover {
+            background-color: #cbd5e0;
+        }
+
+        .result {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #cbd5e0;
+            color: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>CipherSQLStudio</h1>
+
+    <div class="card">
+        <h3>Question</h3>
+        <p>Find students who have enrolled in same course.</p>
+
+        <h3>Write SQL Query</h3>
+        <textarea placeholder="Write your SQL query here..."></textarea>
+
+        <div class="btn-group">
+            <button class="execute-btn" onclick="showResult()">Execute Query</button>
+            <button class="hint-btn" onclick="getHint()">Get Hint</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Result</h3>
+        <div class="result" id="resultBox">
+            <strong>Result will appear here</strong>
+        </div>
+    </div>
+
+</div>
+
+<script>
+async function showResult() {
+    const query = document.querySelector("textarea").value;
+
+    const response = await fetch("http://127.0.0.1:5000/execute", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ query })
+    });
+
+    const data = await response.json();
+    const resultBox = document.getElementById("resultBox");
+
+    // If no data
+    if (!Array.isArray(data.message) || data.message.length === 0) {
+        resultBox.innerHTML = "<p>No results found</p>";
+        return;
+    }
+
+    // Create HTML table
+    let table = "<table style='width:100%; border-collapse: collapse;'>";
+
+    // Table headers
+    table += "<tr>";
+    Object.keys(data.message[0]).forEach(key => {
+        table += `<th style="border:1px solid #ccc; padding:8px; background:#edf2f7;">${key}</th>`;
+    });
+    table += "</tr>";
+
+    // Table rows
+    data.message.forEach(row => {
+        table += "<tr>";
+        Object.values(row).forEach(value => {
+            table += `<td style="border:1px solid #ccc; padding:8px;">${value}</td>`;
+        });
+        table += "</tr>";
+    });
+
+    table += "</table>";
+    resultBox.innerHTML = table;
+}
+
+function getHint() {
+    alert("Hint: Use GROUP BY and HAVING COUNT(*) > 1");
+}
+</script>
+
+
+</body>
+</html>
