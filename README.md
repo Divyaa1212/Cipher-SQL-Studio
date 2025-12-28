@@ -77,8 +77,8 @@ http://127.0.0.1:5000
 ```
 ## Future Enhancements
 
-User authentication
-SQL query validation
-Multiple database support
-Predefined SQL challenges
-Syntax highlighting editor
+- User authentication
+- SQL query validation
+- Multiple database support
+- Predefined SQL challenges
+- Syntax highlighting editor
