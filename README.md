@@ -35,3 +35,8 @@ CipherSQLStudio is a simple SQL practice and execution web application that allo
 
 ## Project Structure
 
+CipherSQLStudio/
+│
+├── index.html
+├── app.py
+└── README.md
