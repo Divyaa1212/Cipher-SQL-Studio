@@ -57,7 +57,6 @@ CipherSQLStudio/
 
 ## Setup Instructions
 
-### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/your-username/CipherSQLStudio.git
 cd CipherSQLStudio
